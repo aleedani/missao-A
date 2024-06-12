@@ -23,10 +23,9 @@ const perguntas = [
             enunciado: "Com a descoberta desta tecnologia, chamada Inteligência Artificial, uma professora de tecnologia da escola decidiu fazer uma sequência de aulas sobre esta tecnologia. No fim de uma aula ela pede que você escreva um trabalho sobre o uso de IA em sala de aula. Qual atitude você toma?",
             alternativas: [  
     {
-               texto: "Utiliza uma ferramenta de busca na internet que utiliza IA para que ela ajude a encontrar informações relevantes para o trabalho e explique numa linguagem que facilite o entendimento.",
-               afirmacao: "afirmacao"
-    },
-    {
+               texto: "Utiltransition: background-color 0.3s;
+            }
+
                texto: "Escreve o trabalho com base nas conversas que teve com colegas, algumas pesquisas na internet e conhecimentos próprios sobre o tema.",
                afirmacao: "afirmacao"
     }
@@ -75,23 +74,43 @@ const perguntas = [
     
     let atual = 0;
     let perguntaAtual;
+    let historiaFinal = "";
 
     function mostraPergunta() {
+        if (atual >= perguntas.length) {
+            mostraResultado();
+            return;
+        }
         perguntaAtual = perguntas[atual];
         caixaPerguntas.textContent = perguntaAtual.enunciado;
+        caixaAlternativas.textContent = "";
         mostrarAlternativas();
     }
-    function mostraAlternativas() {
+    function mostraAlternativas(){
         for(const alternativa of perguntaAtual.alternativas) {
             const botaoAlternativas = document.createElement("button");
             botaoAlternativas.textContent = alternativa.texto;
-            botaoAlternativas.addEventListener("click", function(){
-                atual++;
-                mostraPergunta();
-            })
+            botaoAlternativas.addEventListener("click", () => respostaSelecionada(alternativa));
             caixaAlternativas.appendChild(botaoAlternativas);
-    }
-
         }
+    }
+    function respostaSelecionada(opcaoSelecionada){
+        const afirmacoes = opcaoSelecionada.afirmacoes;
+        historiaFinal += afirmacoes + " ";
+        atual++;
+        mostraPergunta();
+    }
+    // código omitido
+
+function mostraResultado() {
+    caixaPerguntas.textContent = "Em 2049...";
+    textoResultado.textContent = historiaFinal;
+    caixaAlternativas.textContent = "";
+}
+
+// código omitido
+
     mostraPergunta();
+    
+    
   
